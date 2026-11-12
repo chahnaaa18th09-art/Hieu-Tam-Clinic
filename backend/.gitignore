@@ -1,24 +1,14 @@
-
-# Dependencies
+@"
 node_modules/
 **/node_modules/
 
-# Environment variables - NEVER upload
 .env
 .env.*
 !.env.example
 
-# Build files
 dist/
 build/
-
-# Logs
 *.log
-npm-debug.log*
-
-# Operating system
 .DS_Store
 Thumbs.db
-
-# Editor
-.vscode/
+"@ | Set-Content -Encoding utf8 .gitignore
