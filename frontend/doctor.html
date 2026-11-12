@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cổng thông tin Bác sĩ - Phòng khám Đa khoa Hiếu Tâm</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container header-inner" style="max-width:100%; padding:0 28px;">
+      <a href="index.html" class="brand-logo">
+        <div class="brand-icon"><i class="fa-solid fa-suitcase-medical"></i></div>
+        <div class="brand-text">
+          <span class="brand-name">Hiếu Tâm</span>
+          <span class="brand-sub">CỔNG BÁC SĨ</span>
+        </div>
+      </a>
+      <div class="header-actions">
+        <a href="index.html" class="btn btn-light-outline">Trang chủ</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="container section-padding">
+    <h1 style="font-size:24px; font-weight:800; color:var(--primary-dark); margin-bottom:18px;">Danh sách bệnh nhân hẹn khám</h1>
+    <div class="stat-card">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Mã lịch hẹn</th>
+            <th>Bệnh nhân</th>
+            <th>Số điện thoại</th>
+            <th>Thời gian khám</th>
+            <th>Ghi chú / Triệu chứng</th>
+            <th>Trạng thái</th>
+          </tr>
+        </thead>
+        <tbody id="doctorScheduleBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/doctor.js"></script>
+</body>
+</html>

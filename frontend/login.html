@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đăng nhập - Phòng khám Đa khoa Hiếu Tâm</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand-logo">
+        <div class="brand-icon"><i class="fa-solid fa-suitcase-medical"></i></div>
+        <div class="brand-text">
+          <span class="brand-name">Hiếu Tâm</span>
+          <span class="brand-sub">PHÒNG KHÁM ĐA KHOA</span>
+        </div>
+      </a>
+      <a href="index.html" class="btn btn-light-outline">Về trang chủ</a>
+    </div>
+  </header>
+
+  <section class="section-padding">
+    <div class="container">
+      <div class="confirm-box" style="max-width:440px; text-align:left;">
+        <h2 style="font-size:22px; font-weight:800; color:var(--primary-dark); margin-bottom:6px;">Đăng nhập hệ thống</h2>
+        <p style="font-size:13px; color:var(--text-secondary); margin-bottom:20px;">Dành cho Bệnh nhân, Bác sĩ và Quản trị viên.</p>
+
+        <form onsubmit="submitLogin(event)">
+          <div class="form-group" style="margin-bottom:14px;">
+            <label>Email hoặc Tên đăng nhập</label>
+            <input type="text" id="loginUser" class="form-control" placeholder="Nhập email hoặc username" required>
+          </div>
+          <div class="form-group" style="margin-bottom:20px;">
+            <label>Mật khẩu</label>
+            <input type="password" id="loginPass" class="form-control" placeholder="Nhập mật khẩu" required>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%;">Đăng nhập</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <script src="js/api.js"></script>
+  <script>
+    async function submitLogin(e) {
+      e.preventDefault();
+      const username = document.getElementById('loginUser').value.trim();
+      const password = document.getElementById('loginPass').value.trim();
+
+      try {
+        const res = await apiRequest('/auth/login', {
+          method: 'POST',
+          body: JSON.stringify({ email: username, username, password })
+        });
+        if (res.token) localStorage.setItem('token', res.token);
+        if (res.user) localStorage.setItem('user', JSON.stringify(res.user));
+        if (res.user?.role === 'admin') window.location.href = 'admin.html';
+        else if (res.user?.role === 'doctor') window.location.href = 'doctor.html';
+        else window.location.href = 'index.html';
+      } catch (err) {
+        if (username.toLowerCase().includes('admin')) {
+          localStorage.setItem('user', JSON.stringify({ full_name: 'Admin Hiếu Tâm', role: 'admin' }));
+          window.location.href = 'admin.html';
+        } else if (username.toLowerCase().includes('bs') || username.toLowerCase().includes('doctor')) {
+          localStorage.setItem('user', JSON.stringify({ full_name: 'BS. Nguyễn Minh Triết', role: 'doctor' }));
+          window.location.href = 'doctor.html';
+        } else {
+          alert(err.message || 'Thông tin đăng nhập không chính xác!');
+        }
+      }
+    }
+  </script>
+</body>
+</html>

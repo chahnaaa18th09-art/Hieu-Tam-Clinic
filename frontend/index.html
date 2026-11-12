@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phòng khám Đa khoa Hiếu Tâm - Chủ động chăm sóc, an tâm mỗi ngày</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* ==================== HERO BANNER ==================== */
+    .hero-banner {
+      background: linear-gradient(90deg, #dcf1eb 0%, #eaf6f3 35%, #f2faf8 65%, #ffffff 100%) !important;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border-color);
+      min-height: calc(78vh - 72px) !important;
+      min-height: calc(78svh - 72px) !important;
+      padding: 32px 0 !important;
+    }
+
+    .hero-banner .hero-grid {
+      display: grid !important;
+      grid-template-columns: 42% 58% !important;
+      align-items: center !important;
+      gap: 0 !important;
+      min-height: max(405px, calc(78vh - 136px)) !important;
+      min-height: max(405px, calc(78svh - 136px)) !important;
+      position: relative;
+      width: 100% !important;
+      max-width: none !important;
+      padding: 0 0 0 max(20px, calc((100vw - 1220px) / 2 + 20px)) !important;
+    }
+
+    .hero-content {
+      padding: 32px 0 !important;
+      position: relative;
+      z-index: 3;
+    }
+
+    .hero-visual {
+      position: absolute !important;
+      inset: 0 0 0 0 !important;
+      width: auto !important;
+      height: auto !important;
+      min-height: 0 !important;
+      display: block !important;
+      z-index: 1;
+    }
+
+    .hero-doctor-img-wrap {
+      position: absolute !important;
+      top: 0 !important;
+      bottom: 0 !important;
+      left: 36% !important;
+      right: 0 !important;
+      width: auto !important;
+      height: auto !important;
+      margin-left: 0 !important;
+      z-index: 1 !important;
+      overflow: visible !important;
+      pointer-events: none;
+    }
+
+    .hero-doctor-img {
+      position: absolute !important;
+      top: 0 !important;
+      left: calc(50% - 60px) !important;
+      width: auto !important;
+      max-width: none !important;
+      height: 100% !important;
+      transform: translateX(-50%);
+      object-fit: contain !important;
+      object-position: center center !important;
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.22) 8%, #000 24%, #000 100%);
+      mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.22) 8%, #000 24%, #000 100%);
+    }
+
+    .floating-schedule-card {
+      position: absolute !important;
+      right: 1% !important;
+      top: 50% !important;
+      transform: translateY(-50%) !important;
+      width: min(290px, 25vw) !important;
+      max-width: 320px !important;
+      height: auto;
+      background: #FFFFFF !important;
+      border-radius: 16px !important;
+      padding: 16px 18px 15px !important;
+      box-shadow: 0 10px 30px rgba(11, 70, 57, 0.08) !important;
+      border: 1px solid #eaf3f0 !important;
+      z-index: 5;
+      pointer-events: auto;
+    }
+
+    .floating-schedule-card .floating-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+
+    .floating-schedule-card .floating-card-title-sm {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--primary-dark);
+    }
+
+    .floating-schedule-card .floating-badge-status {
+      background: var(--primary);
+      color: var(--white);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .floating-schedule-card .floating-date-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--primary-dark);
+      line-height: 1.3;
+      margin: 6px 0 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #edf5f2;
+    }
+
+    /* Bố cục lịch 2 tầng: Hàng trên tên thứ, hàng dưới là ngày số */
+    .mini-week-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      text-align: center;
+      gap: 4px;
+      margin-bottom: 13px;
+      padding-bottom: 13px;
+      border-bottom: 1px solid #edf5f2;
+    }
+
+    .mini-day {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .mini-day-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .mini-day.active .mini-day-label {
+      color: var(--primary);
+      font-weight: 800;
+    }
+
+    .day-number-text {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-main);
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+    }
+
+    .day-number-active {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: var(--white);
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 3px 8px rgba(20, 136, 104, 0.28);
+    }
+
+    /* Định dạng câu trích dẫn 2 dòng và biểu tượng dấu ngoặc kép */
+    .floating-quote-box {
+      display: flex;
+      align-items: flex-start;
+      gap: 7px;
+      margin-bottom: 11px;
+    }
+
+    .quote-mark-icon {
+      flex-shrink: 0;
+      margin-top: 1px;
+      line-height: 1;
+    }
+
+    .floating-quote-text {
+      font-size: 12.5px;
+      font-weight: 500;
+      color: #6b7f79;
+      line-height: 1.45;
+      margin: 0;
+    }
+
+    .floating-schedule-card .floating-link {
+      display: inline-block;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--primary);
+      cursor: pointer;
+    }
+
+    @media (max-width: 1050px) {
+      .hero-banner .hero-grid {
+        grid-template-columns: 1fr !important;
+        padding: 0 20px !important;
+      }
+
+      .hero-visual {
+        position: relative !important;
+        inset: auto !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: 0 !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        display: flex !important;
+        padding: 20px 0;
+      }
+
+      .hero-doctor-img-wrap {
+        position: relative !important;
+        top: auto !important;
+        bottom: auto !important;
+        left: 0 !important;
+        right: auto !important;
+        width: 100% !important;
+        height: auto !important;
+        margin-left: 0 !important;
+      }
+
+      .hero-doctor-img {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        transform: none !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        object-fit: contain !important;
+        object-position: center center !important;
+        height: auto !important;
+        -webkit-mask-image: none;
+        mask-image: none;
+      }
+
+      .floating-schedule-card {
+        position: relative !important;
+        right: auto !important;
+        top: auto !important;
+        align-self: center;
+        transform: none !important;
+        width: min(290px, 100%) !important;
+        max-width: 100% !important;
+        margin: 12px 0 4px;
+      }
+    }
+
+    @media (max-width: 1050px) {
+      .hero-banner {
+        min-height: 0 !important;
+        padding: 0 !important;
+      }
+
+      .hero-banner .hero-grid {
+        min-height: 0 !important;
+      }
+
+      .hero-content {
+        padding: 30px 0 20px !important;
+      }
+
+      .hero-visual {
+        padding: 12px 0 24px;
+      }
+    }
+
+    @media (min-width: 1051px) and (max-width: 1200px) {
+      .hero-title {
+        font-size: 34px;
+      }
+
+      .hero-desc {
+        font-size: 14px;
+      }
+
+      .hero-highlights {
+        gap: 8px;
+      }
+
+      .highlight-item {
+        gap: 5px;
+        font-size: 11px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .hero-title {
+        font-size: 32px;
+      }
+
+      .hero-content {
+        padding: 28px 0 18px !important;
+      }
+
+      .hero-cta-group {
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      .hero-highlights {
+        gap: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- KHU VỰC 1: HEADER -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand-logo" onclick="switchView('home')">
+        <div class="brand-icon-heart">
+          <svg width="38" height="38" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20 35.5C20 35.5 5 25.2 5 14.2C5 8.8 9.2 4.5 14.5 4.5C17.6 4.5 20 6.2 20 6.2C20 6.2 22.4 4.5 25.5 4.5C30.8 4.5 35 8.8 35 14.2C35 25.2 20 35.5 20 35.5Z" fill="#148868"/>
+            <circle cx="20" cy="13.5" r="2.1" fill="#FFFFFF"/>
+            <circle cx="20" cy="21.5" r="2.1" fill="#FFFFFF"/>
+            <circle cx="16" cy="17.5" r="2.1" fill="#FFFFFF"/>
+            <circle cx="24" cy="17.5" r="2.1" fill="#FFFFFF"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">Hiếu Tâm</span>
+          <span class="brand-sub">PHÒNG KHÁM ĐA KHOA</span>
+        </div>
+      </div>
+
+      <nav class="main-nav" id="mainNav">
+        <a class="nav-link active" data-view="home" onclick="switchView('home')">Trang chủ</a>
+        <a class="nav-link" href="about.html">Giới thiệu</a>
+        <a class="nav-link" data-view="specialties" onclick="switchView('specialties')">Chuyên khoa</a>
+        <a class="nav-link" data-view="doctors" onclick="switchView('doctors')">Đội ngũ bác sĩ</a>
+        <a href="#dat-lich-kham" class="nav-btn-book" onclick="event.preventDefault(); startBooking()">Đặt lịch khám</a>
+        <a href="#tra-cuu-lich-hen" class="nav-link" data-view="lookup" onclick="event.preventDefault(); scrollToHomeSection('tra-cuu-lich-hen', 'lookup')">Tra cứu lịch hẹn</a>
+        <a class="nav-link" href="#lien-he">Liên hệ</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="search-plain-btn" title="Tìm kiếm" onclick="switchView('doctors')">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+        <button class="btn-login-rect" id="headerLoginBtn">
+          Đăng nhập
+        </button>
+        <button class="mobile-toggle" onclick="document.getElementById('mainNav').classList.toggle('show')">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== VIEW 1: TRANG CHỦ ==================== -->
+  <div id="view-home" class="page-view active">
+    <!-- KHU VỰC 2: BANNER GIỚI THIỆU -->
+    <section class="hero-banner" id="gioi-thieu">
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <div class="section-eyebrow">PHÒNG KHÁM ĐA KHOA HIẾU TÂM</div>
+          <h1 class="hero-title">
+            Chủ động chăm sóc,
+            <span>an tâm mỗi ngày</span>
+          </h1>
+          <p class="hero-desc">
+            Đồng hành cùng bạn và gia đình với đội ngũ bác sĩ giàu kinh nghiệm, trang thiết bị hiện đại và dịch vụ y tế tận tâm.
+          </p>
+
+          <div class="hero-cta-group">
+            <button type="button" class="btn btn-primary hero-book-btn" onclick="startBooking()">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+                <path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01"></path>
+              </svg>
+              <span>Đặt lịch khám ngay</span>
+              <i class="fa-solid fa-arrow-right" style="font-size:13px;"></i>
+            </button>
+            <button type="button" class="btn btn-outline hero-more-btn" onclick="switchView('specialties')">Tìm hiểu thêm</button>
+          </div>
+
+          <div class="hero-highlights">
+            <div class="highlight-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#148868" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                <path d="M12 8v6M9 11h6"/>
+              </svg>
+              <span>Đội ngũ bác sĩ giỏi</span>
+            </div>
+            <span class="highlight-divider"></span>
+            <div class="highlight-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#148868" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                <path d="M9 12l2 2 4-4"/>
+              </svg>
+              <span>Trang thiết bị hiện đại</span>
+            </div>
+            <span class="highlight-divider"></span>
+            <div class="highlight-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#148868" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
+              <span>Dịch vụ tận tâm</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="image-placeholder hero-image-placeholder">
+            <div class="placeholder-content">
+              <span class="placeholder-icon">🏥</span>
+              <span class="placeholder-text">Khung ảnh chính – Hero Banner</span>
+            </div>
+          </div>
+
+          <div class="floating-schedule-card">
+            <div class="floating-card-top">
+              <span class="floating-card-title-sm">Lịch hôm nay</span>
+              <span class="floating-badge-status">• Đang nhận lịch</span>
+            </div>
+            <div class="floating-date-title" id="dynamicCurrentDateTitle">Thứ Sáu, 6 tháng 11</div>
+            <div class="mini-week-grid" id="dynamicMiniWeekGrid"></div>
+
+            <div class="floating-quote-box">
+              <span class="quote-mark-icon" aria-hidden="true">
+                <svg width="18" height="15" viewBox="0 0 24 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M9.5 0C5.8 2.2 3.5 5.6 3.5 9.8C3.5 11.2 4.1 12.1 5.2 12.1C6.8 12.1 8.1 13.3 8.1 15C8.1 16.7 6.7 18 5 18C2.1 18 0 15.6 0 11.8C0 6.2 3.6 1.8 8.3 0L9.5 0ZM22.9 0C19.2 2.2 16.9 5.6 16.9 9.8C16.9 11.2 17.5 12.1 18.6 12.1C20.2 12.1 21.5 13.3 21.5 15C21.5 16.7 20.1 18 18.4 18C15.5 18 13.4 15.6 13.4 11.8C13.4 6.2 17 1.8 21.7 0L22.9 0Z" fill="#94D3C0"/>
+                </svg>
+              </span>
+              <p class="floating-quote-text">
+                Sức khỏe là món quà quý nhất.<br>
+                Hãy bắt đầu chăm sóc từ hôm nay.
+              </p>
+            </div>
+
+            <span class="floating-link" onclick="document.getElementById('dat-lich-kham')?.scrollIntoView({ behavior: 'smooth', block: 'start' })">Xem chi tiết →</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- KHU VỰC 3: CHUYÊN KHOA NỔI BẬT VÀ LÝ DO CHỌN HIẾU TÂM -->
+    <section class="home-care-section">
+      <div class="container">
+        <div class="home-specialties-layout">
+          <div class="home-specialty-intro">
+            <div class="section-eyebrow">CHUYÊN KHOA NỔI BẬT</div>
+            <h2 class="home-specialty-title">Các chuyên khoa khám <span>chữa bệnh</span></h2>
+            <p class="home-specialty-copy">Đội ngũ bác sĩ tận tâm, cùng phác đồ điều trị chuẩn y khoa, đồng hành chăm sóc sức khỏe cho cả gia đình.</p>
+            <button type="button" class="home-specialty-cta" onclick="switchView('specialties')">Xem chuyên khoa <span aria-hidden="true">→</span></button>
+          </div>
+
+          <div class="home-specialty-grid">
+            <article class="home-specialty-card">
+              <div class="home-specialty-icon" aria-hidden="true">
+                <svg viewBox="0 0 48 48" fill="none"><path d="M14 7v7a7 7 0 0 0 14 0V7M11 7h6m8 0h6M21 21v5a9 9 0 0 0 18 0v-3" /><circle cx="39" cy="19" r="3.5" /><circle cx="21" cy="35" r="3" /></svg>
+              </div>
+              <h3>Nội Tổng Quát</h3>
+              <p>Chăm sóc sức khỏe toàn diện mỗi ngày.</p>
+              <button type="button" class="home-specialty-link" onclick="switchView('specialties')">Tìm hiểu thêm <span aria-hidden="true">→</span></button>
+            </article>
+            <article class="home-specialty-card">
+              <div class="home-specialty-icon" aria-hidden="true">
+                <svg viewBox="0 0 48 48" fill="none"><path d="M24 40S7 30 7 17a9 9 0 0 1 17-4 9 9 0 0 1 17 4c0 13-17 23-17 23Z" /><path d="M10 24h9l4-7 5 14 4-7h6" /></svg>
+              </div>
+              <h3>Tim Mạch</h3>
+              <p>Đồng hành cùng trái tim khỏe mạnh.</p>
+              <button type="button" class="home-specialty-link" onclick="switchView('specialties')">Tìm hiểu thêm <span aria-hidden="true">→</span></button>
+            </article>
+            <article class="home-specialty-card">
+              <div class="home-specialty-icon" aria-hidden="true">
+                <svg viewBox="0 0 48 48" fill="none"><circle cx="18" cy="10" r="4" /><path d="M17 15c-5 2-7 7-7 13v8m8-20c7 0 12 4 13 10l1 5c.5 3 3 5 6 5 2 0 3-1 3-3v-4c0-3-2-5-5-6l-4-2" /><path d="M17 17c-1 8 1 14 7 18 3 2 7 2 10 1" /><circle cx="26" cy="27" r="4" /><path d="M26 31v5m-4-3h8" /></svg>
+              </div>
+              <h3>Sản Phụ Khoa</h3>
+              <p>Chăm sóc sức khỏe phụ nữ toàn diện.</p>
+              <button type="button" class="home-specialty-link" onclick="switchView('specialties')">Tìm hiểu thêm <span aria-hidden="true">→</span></button>
+            </article>
+            <article class="home-specialty-card">
+              <div class="home-specialty-icon" aria-hidden="true">
+                <svg viewBox="0 0 48 48" fill="none"><path d="M20 6c-3 5-4 9-2 13l3 5-3 5c-2 4-1 9 2 13m8-36c3 5 4 9 2 13l-3 5 3 5c2 4 1 9-2 13" /><path d="M18 19c4 2 8 2 12 0m-12 10c4-2 8-2 12 0" /><path d="M24 18v12" /></svg>
+              </div>
+              <h3>Cơ Xương Khớp</h3>
+              <p>Hỗ trợ vận động linh hoạt hơn.</p>
+              <button type="button" class="home-specialty-link" onclick="switchView('specialties')">Tìm hiểu thêm <span aria-hidden="true">→</span></button>
+            </article>
+            <article class="home-specialty-card">
+              <div class="home-specialty-icon" aria-hidden="true">
+                <svg viewBox="0 0 48 48" fill="none"><path d="M24 6C20 13 12 21 12 29a12 12 0 0 0 24 0c0-8-8-16-12-23Z" /><path d="M17 31c2-6 7-10 14-11-1 7-5 12-12 14" /><path d="M35 10v10m-5-5h10" /></svg>
+              </div>
+              <h3>Da Liễu</h3>
+              <p>Chăm sóc làn da khỏe đẹp.</p>
+              <button type="button" class="home-specialty-link" onclick="switchView('specialties')">Tìm hiểu thêm <span aria-hidden="true">→</span></button>
+            </article>
+            <article class="home-specialty-card">
+              <div class="home-specialty-icon" aria-hidden="true">
+                <svg viewBox="0 0 48 48" fill="none"><path d="M13 21a11 11 0 0 1 22 0v8a11 11 0 0 1-22 0v-8Z" /><path d="M13 24H9a4 4 0 0 0 0 8h4m22-8h4a4 4 0 0 1 0 8h-4" /><path d="M19 26h.01m10 0h.01m-9 7c2 2 6 2 8 0" /><path d="M19 15c1-4 5-6 9-5" /></svg>
+              </div>
+              <h3>Nhi Khoa</h3>
+              <p>Chăm sóc trẻ yêu vững vàng lớn khôn.</p>
+              <button type="button" class="home-specialty-link" onclick="switchView('specialties')">Tìm hiểu thêm <span aria-hidden="true">→</span></button>
+            </article>
+            <article class="home-specialty-card">
+              <div class="home-specialty-icon" aria-hidden="true">
+                <svg viewBox="0 0 48 48" fill="none"><path d="M25 40V8c0-2 3-3 5-2 3 2 3 6 1 9l-3 4v5c0 3 2 5 4 7 2 2 3 5 2 8" /><path d="M25 14c-6-2-10 1-10 7v6c0 7 4 11 10 13" /><path d="M25 20c-4 0-6 3-6 6 0 2 1 4 3 5" /></svg>
+              </div>
+              <h3>Tai Mũi Họng</h3>
+              <p>Chăm sóc tai mũi họng cho mọi lứa tuổi.</p>
+              <button type="button" class="home-specialty-link" onclick="switchView('specialties')">Tìm hiểu thêm <span aria-hidden="true">→</span></button>
+            </article>
+            <article class="home-specialty-card">
+              <div class="home-specialty-icon" aria-hidden="true">
+                <svg viewBox="0 0 48 48" fill="none"><path d="M4 24s7-12 20-12 20 12 20 12-7 12-20 12S4 24 4 24Z" /><circle cx="24" cy="24" r="8" /><circle cx="24" cy="24" r="3" /></svg>
+              </div>
+              <h3>Mắt</h3>
+              <p>Chăm sóc đôi mắt sáng khỏe.</p>
+              <button type="button" class="home-specialty-link" onclick="switchView('specialties')">Tìm hiểu thêm <span aria-hidden="true">→</span></button>
+            </article>
+          </div>
+        </div>
+
+        <div class="home-why-section about-section">
+          <div class="about-image-col">
+            <div class="image-placeholder about-image-placeholder">
+              <div class="placeholder-content">
+                <span class="placeholder-icon">🏥</span>
+                <span class="placeholder-text">Tòa nhà Phòng khám Hiếu Tâm</span>
+              </div>
+            </div>
+          </div>
+          <div class="home-why-content about-content-col">
+            <div class="section-eyebrow">GIỚI THIỆU VỀ HIẾU TÂM CLINIC</div>
+            <h2 class="home-why-title">Chất lượng chăm sóc sức khỏe, đồng hành cùng bạn mỗi ngày.</h2>
+            <p class="home-why-copy">Hiếu Tâm Clinic ra đời với sứ mệnh mang đến dịch vụ chăm sóc sức khỏe chuyên nghiệp, tận tâm và đáng tin cậy cho mọi gia đình. Với đội ngũ bác sĩ giàu kinh nghiệm, trang thiết bị hiện đại và không gian khám bệnh thoáng mát, chúng tôi cam kết đồng hành cùng bạn trong mọi giai đoạn chăm sóc sức khỏe.</p>
+            <div class="home-benefits">
+              <div class="home-benefit">
+                <span class="home-benefit-icon" aria-hidden="true">
+                  <svg viewBox="0 0 48 48" fill="none"><circle cx="17" cy="14" r="6" /><circle cx="32" cy="16" r="5" /><path d="M5 38v-4a12 12 0 0 1 24 0v4H5Zm24-8a10 10 0 0 1 14 9h-8" /><path d="M14 28v5m6-5v5m-8 5h10" /></svg>
+                </span>
+                <span><strong>Đội ngũ bác sĩ chuyên môn cao</strong><small>Tận tâm, giàu kinh nghiệm.</small></span>
+              </div>
+              <div class="home-benefit">
+                <span class="home-benefit-icon" aria-hidden="true">
+                  <svg viewBox="0 0 48 48" fill="none"><rect x="8" y="13" width="32" height="28" rx="4" /><path d="M17 13V9a3 3 0 0 1 3-3h8a3 3 0 0 1 3 3v4m-7 7v14m-7-7h14" /></svg>
+                </span>
+                <span><strong>Trang thiết bị hiện đại</strong><small>Đáp ứng chuẩn y khoa.</small></span>
+              </div>
+              <div class="home-benefit">
+                <span class="home-benefit-icon" aria-hidden="true">
+                  <svg viewBox="0 0 48 48" fill="none"><path d="m5 21 8-8 9 2 7-3 14 9-5 6-7-4-8 8a4 4 0 0 1-6-5l-3 2a4 4 0 0 1-6-5l-3 2-4-4Z" /><path d="m19 25 6 6a4 4 0 0 0 6-5m-11 0 8 8a4 4 0 0 0 6-5m-17-2 5 5" /></svg>
+                </span>
+                <span><strong>Dịch vụ tận tâm, thân thiện</strong><small>Luôn đồng hành cùng bạn.</small></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== GIÁ TRỊ CỐT LÕI ===== -->
+    <section class="section-padding core-values-section">
+      <div class="container">
+        <div class="section-header-center">
+          <div class="section-eyebrow">GIÁ TRỊ CỐT LÕI</div>
+          <h2 class="section-title">Những giá trị tạo nên Hiếu Tâm Clinic.</h2>
+          <p class="section-desc">Chúng tôi luôn hướng đến những giá trị trên đây trong từng hoạt động chăm sóc sức khỏe.</p>
+        </div>
+        <div class="values-grid">
+          <div class="value-card">
+            <div class="value-icon">❤️</div>
+            <h4 class="value-title">Tận tâm</h4>
+            <p class="value-desc">Luôn lắng nghe, quan tâm và đặt tâm nhàn của bệnh nhân lên hàng đầu.</p>
+          </div>
+          <div class="value-card">
+            <div class="value-icon">🛡️</div>
+            <h4 class="value-title">Chuyên nghiệp</h4>
+            <p class="value-desc">Không ngừng nghiên cứu, chuẩn mực và chất lượng dịch vụ.</p>
+          </div>
+          <div class="value-card">
+            <div class="value-icon">🤝</div>
+            <h4 class="value-title">Trách nhiệm</h4>
+            <p class="value-desc">Đặt sự tin tưởng của bệnh nhân lên trên hết trong mọi hành động.</p>
+          </div>
+          <div class="value-card">
+            <div class="value-icon">⭐</div>
+            <h4 class="value-title">Uy tín</h4>
+            <p class="value-desc">Xây dựng trên tin tưởng bậc thảo đối phúc với bệnh nhân và hành nghề.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CƠ SỞ VẬT CHẤT ===== -->
+    <section class="section-padding facilities-section">
+      <div class="container">
+        <div class="facilities-layout">
+          <div class="facilities-content">
+            <div class="section-eyebrow">CƠ SỞ VẬT CHẤT</div>
+            <h2 class="section-title">Không gian chăm sóc sức khỏe hiện đại.</h2>
+            <p class="section-desc">Hiếu Tâm Clinic được trang bị cơ sở vật chất hiện đại, sạch sẽ và thân thiện để mang lại trải nghiệm khám chữa bệnh tốt nhất.</p>
+            <button type="button" class="btn btn-primary facilities-cta">Khám phá không gian <span aria-hidden="true">→</span></button>
+          </div>
+          <div class="facilities-images">
+            <div class="image-placeholder facility-main-placeholder">
+              <div class="placeholder-content">
+                <span class="placeholder-icon">🏥</span>
+                <span class="placeholder-text">Phòng chờ khám bệnh</span>
+              </div>
+            </div>
+            <div class="facility-grid">
+              <div class="image-placeholder facility-sm-1">
+                <div class="placeholder-content">
+                  <span class="placeholder-icon">🚪</span>
+                  <span class="placeholder-text">Phòng khám chuyên khoa</span>
+                </div>
+              </div>
+              <div class="image-placeholder facility-sm-2">
+                <div class="placeholder-content">
+                  <span class="placeholder-icon">💊</span>
+                  <span class="placeholder-text">Khu vực thuốc</span>
+                </div>
+              </div>
+              <div class="image-placeholder facility-sm-3">
+                <div class="placeholder-content">
+                  <span class="placeholder-icon">🖥️</span>
+                  <span class="placeholder-text">Trang thiết bị y tế</span>
+                </div>
+              </div>
+              <div class="image-placeholder facility-sm-4">
+                <div class="placeholder-content">
+                  <span class="placeholder-icon">🛏️</span>
+                  <span class="placeholder-text">Phòng điều trị</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- KHU VỰC 4: ĐỘI NGŨ BÁC SĨ -->
+    <section class="section-padding doctors-section">
+      <div class="container">
+        <div class="doctors-layout">
+          <div class="doctors-image-col">
+            <div class="image-placeholder doctors-image-placeholder">
+              <div class="placeholder-content">
+                <span class="placeholder-icon">👨‍⚕️</span>
+                <span class="placeholder-text">Đội ngũ bác sĩ Hiếu Tâm</span>
+              </div>
+            </div>
+          </div>
+          <div class="doctors-content-col">
+            <div class="section-eyebrow">ĐỘI NGŨ BÁC SĨ</div>
+            <h2 class="section-title">Đội ngũ y tế tận tâm, đồng hành cùng bạn.</h2>
+            <p class="section-desc">Đội ngũ bác sĩ giàu kinh nghiệm, tâm thận và chuyên môn cao, luôn sẵn sàng chăm sóc sức khỏe cho bạn và gia đình.</p>
+            <div class="doctor-filters">
+              <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="homeDoctorSearch" class="search-input" placeholder="Tìm theo tên bác sĩ...">
+              </div>
+              <select id="homeDoctorSpecFilter" class="filter-select">
+                <option value="">Tất cả chuyên khoa</option>
+              </select>
+            </div>
+            <p class="doctor-results-summary home-doctor-results-summary" id="homeDoctorResultsSummary" aria-live="polite" hidden></p>
+            <div class="doctors-grid-home" id="homeDoctorsGrid" role="region" aria-label="Danh sách bác sĩ"></div>
+            <div class="doctor-list-cta-wrap">
+              <button type="button" class="doctor-list-cta" onclick="switchView('doctors')">Xem tất cả bác sĩ <span aria-hidden="true">→</span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CAM KẾT CHẤT LƯỢNG ===== -->
+    <section class="section-padding quality-commitment-section">
+      <div class="container">
+        <div class="quality-layout">
+          <div class="quality-content-col">
+            <div class="section-eyebrow">CAM KẾT CHẤT LƯỢNG</div>
+            <h2 class="section-title">Sự an tâm của bạn là điều chúng tôi cam kết.</h2>
+            <p class="section-desc">Chúng tôi cam kết mang đến dịch vụ chăm sóc sức khỏe tốt nhất, trong một môi trường an toàn, chuyên nghiệp và tận tâm.</p>
+          </div>
+          <div class="quality-list-col">
+            <ul class="quality-commitments">
+              <li class="commitment-item">
+                <span class="commitment-icon">✓</span>
+                <span>Tôn trọng và lắng nghe khách hàng</span>
+              </li>
+              <li class="commitment-item">
+                <span class="commitment-icon">✓</span>
+                <span>Tư vấn trong tình trạng, điều trị</span>
+              </li>
+              <li class="commitment-item">
+                <span class="commitment-icon">✓</span>
+                <span>Chuẩn trong quy trình khám chuẩn</span>
+              </li>
+              <li class="commitment-item">
+                <span class="commitment-icon">✓</span>
+                <span>Bảo mật thông tin khách hàng</span>
+              </li>
+              <li class="commitment-item">
+                <span class="commitment-icon">✓</span>
+                <span>Đồng hành trong hành trình chăm sóc sức khỏe</span>
+              </li>
+            </ul>
+          </div>
+          <div class="quality-image-col">
+            <div class="image-placeholder quality-image-placeholder">
+              <div class="placeholder-content">
+                <span class="placeholder-icon">🤲</span>
+                <span class="placeholder-text">Chăm sóc sức khỏe bệnh nhân</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CTA BANNER ===== -->
+    <section class="section-padding cta-banner-section">
+      <div class="container">
+        <div class="cta-banner">
+          <div class="cta-icon">
+            <svg viewBox="0 0 48 48" fill="none"><path d="M43.5 16.5c0 6.627-5.373 12-12 12h-5c-.238 0-.463-.04-.696-.07-.784-.102-1.373-.102-2.157 0-.233.03-.458.07-.696.07h-5c-6.627 0-12-5.373-12-12 0-4.868 2.827-9.107 7-11.121v-2.879c0-4.142 1.58-7.922 4.121-10.461a12.94 12.94 0 0 1 3.558-1.919 13 13 0 0 1 2.24-.227c1.014 0 2.011.12 2.983.343a13 13 0 0 1 2.098.732c1.137.475 2.196 1.084 3.143 1.811l.315.242c.816.626 1.566 1.34 2.236 2.138.372.441.687.927.938 1.443a11 11 0 0 1 .672 1.636c.089.276.147.564.147.858 0 .622-.101 1.23-.274 1.819-.188.637-.458 1.236-.776 1.793-.324.566-.694 1.085-1.101 1.542-.395.445-.81.847-1.237 1.207l-.143.12c-.461.389-.952.72-1.464.984-.462.238-.943.434-1.423.592l-.084.027c-.462.151-.935.26-1.41.335a14 14 0 0 1-2.37.186c-.416 0-.825-.026-1.231-.069a13 13 0 0 1-1.642-.215l-.043-.018a13 13 0 0 1-1.77-.381l-.103-.03c-.637-.194-1.248-.442-1.828-.733a13 13 0 0 1-1.764-.811c-.312-.166-.593-.354-.872-.545a14 14 0 0 1-1.482-1.038c-.187-.155-.35-.324-.52-.488a13 13 0 0 1-1.396-1.367c-.122-.136-.226-.282-.339-.423a13 13 0 0 1-.943-1.224c-.094-.145-.165-.298-.247-.447a13 13 0 0 1-.584-1.342c-.061-.165-.098-.335-.143-.502a13 13 0 0 1-.329-1.26c-.034-.154-.044-.309-.061-.465a13 13 0 0 1-.078-1.113c0-.445.023-.887.058-1.325.018-.225.05-.447.082-.67a13 13 0 0 1 .28-1.471c.079-.327.178-.648.29-.964q.162-.457.361-.899c.098-.22.205-.434.315-.648.116-.225.239-.444.367-.661.115-.194.237-.381.364-.568.147-.216.299-.426.458-.629.137-.176.279-.345.426-.511.14-.16.284-.312.432-.46.166-.167.336-.326.513-.478.185-.158.374-.308.57-.448.214-.153.432-.297.656-.429.228-.134.46-.257.697-.367.25-.116.504-.216.764-.306.279-.097.562-.175.85-.244.295-.073.594-.128.897-.172.437-.063.878-.102 1.327-.102h5c.449 0 .89.039 1.327.102.295.045.59.1.897.172.288.069.572.147.85.244.26.09.514.19.764.306.236.11.443.234.656.429.196.14.385.29.57.448.177.152.347.311.513.478.148.148.292.3.432.46.147.166.289.335.426.511.159.203.311.413.458.629.127.187.249.374.364.568.128.217.251.436.367.661.11.214.219.428.315.648q.199.442.361.899c.112.316.211.637.29.964a13 13 0 0 1 .28 1.471c.032.223.064.445.082.67.035.438.058.88.058 1.325 0 .154-.014.305-.032.457a13 13 0 0 1-.143.502c-.063.21-.136.413-.213.613a13 13 0 0 1-.247.447c-.113.141-.217.287-.339.423a13 13 0 0 1-.943 1.224c-.113.141-.217.287-.339.423a13 13 0 0 1-1.396 1.367c-.17.164-.333.333-.52.488a14 14 0 0 1-1.482 1.038c-.279.191-.56.379-.872.545a13 13 0 0 1-1.764.811c-.58.291-1.191.539-1.828.733l-.103.03a13 13 0 0 1-1.77.381l-.043.018a13 13 0 0 1-1.642.215c-.406.043-.815.069-1.231.069a14 14 0 0 1-2.37-.186c-.475-.075-.948-.184-1.41-.335l-.084-.027c-.48-.158-.961-.354-1.423-.592-.512-.264-1.003-.595-1.464-.984l-.143-.12c-.427-.36-.842-.762-1.237-1.207-.407-.457-.777-.976-1.101-1.542-.318-.557-.588-1.156-.776-1.793-.173-.589-.274-1.197-.274-1.819 0-.294.058-.582.147-.858a11 11 0 0 1 .672-1.636c.251-.516.566-1.002.938-1.443.67-.798 1.42-1.512 2.236-2.138l.315-.242c.947-.727 2.006-1.336 3.143-1.811a13 13 0 0 1 2.098-.732c.972-.223 1.969-.343 2.983-.343a13 13 0 0 1 2.24.227c1.141.499 2.192 1.11 3.099 1.809a12.94 12.94 0 0 1 3.558 1.919c2.541 2.539 4.121 6.319 4.121 10.461v2.879c-4.173 2.014-7 6.253-7 11.121Z\" fill=\"#fff\"/></svg>
+          </div>
+          <div class="cta-content">
+            <h2 class="cta-title">Hãy để Hiếu Tâm đồng hành cùng sức khỏe của bạn.</h2>
+            <p class="cta-desc">Chúng tôi mong nhận được phản hồi từ quý khách hàng để cung cấp dịch vụ chăm sóc sức khỏe tốt nhất.</p>
+            <div class="cta-actions">
+              <a href="#" class="btn btn-primary">Đặt lịch khám ngay →</a>
+              <a href="#" class="btn btn-outline">Liên hệ với chúng tôi</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- KHU VỰC 5: ĐẶT LỊCH KHÁM TRỰC TUYẾN -->
+    <section class="section-padding" id="dat-lich-kham" tabindex="-1">
+      <div class="container">
+        <div style="margin-bottom:24px;">
+          <div class="section-eyebrow">QUY TRÌNH ĐẶT LỊCH ĐƠN GIẢN</div>
+          <h2 class="section-title">Đặt lịch khám trực tuyến</h2>
+        </div>
+
+        <div class="booking-stepper" id="bookingStepper"></div>
+
+        <div class="booking-layout">
+          <div class="booking-main-card" id="bookingStepContainer"></div>
+
+          <div class="booking-support-card">
+            <div class="booking-support-content">
+              <div class="booking-support-label">
+                <i class="fa-regular fa-comments" aria-hidden="true"></i> <span>Tư vấn trực tuyến</span>
+              </div>
+              <p class="booking-support-eyebrow">CẦN HỖ TRỢ?</p>
+              <h4>Chat với chúng tôi</h4>
+              <p>Đội ngũ tư vấn luôn sẵn sàng hỗ trợ bạn.</p>
+              <a class="btn btn-light-outline booking-support-action" href="#lien-he">Bắt đầu trò chuyện</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- KHU VỰC 6: TRA CỨU & HỦY LỊCH KHÁM -->
+    <section class="section-padding appointment-lookup-section" id="tra-cuu-lich-hen" style="padding-top:12px;" tabindex="-1">
+      <div class="container">
+        <div style="margin-bottom:20px;">
+          <div class="section-eyebrow">QUẢN LÝ LỊCH HẸN</div>
+          <h2 class="section-title">Tra cứu & Hủy lịch khám</h2>
+        </div>
+
+        <div class="lookup-layout">
+          <div class="lookup-card">
+            <form class="lookup-form-grid" id="homeLookupForm" novalidate>
+              <div class="form-group">
+                <label for="homeLookupCode">Mã lịch hẹn *</label>
+                <input type="text" id="homeLookupCode" class="form-control" placeholder="VD: HT-20261029-001" autocomplete="off" aria-describedby="homeLookupResult" required>
+              </div>
+              <div class="form-group">
+                <label for="homeLookupContact">Số điện thoại hoặc email đã dùng khi đặt lịch *</label>
+                <input type="text" id="homeLookupContact" class="form-control" placeholder="Nhập số điện thoại hoặc email" autocomplete="off" aria-describedby="homeLookupResult" required>
+              </div>
+              <button type="submit" class="btn btn-primary" id="homeLookupSubmit">Tra cứu lịch hẹn</button>
+            </form>
+            <div id="homeLookupResult" aria-live="polite"></div>
+          </div>
+
+          <div class="lookup-info-box">
+            <div class="specialty-icon"><i class="fa-regular fa-calendar-days"></i></div>
+            <div>
+              <h4 style="font-size:15px; font-weight:800; color:var(--primary-dark);">Tra cứu và hủy lịch hẹn</h4>
+              <p style="font-size:13px; color:var(--text-secondary);">Nhập mã lịch hẹn cùng số điện thoại hoặc email đã đăng ký để xem thông tin và tình trạng lịch.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ==================== VIEW 2: TRANG CHUYÊN KHOA ==================== -->
+  <div id="view-specialties" class="page-view">
+    <section class="page-banner">
+      <div class="container" style="display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap;">
+        <div>
+          <div class="breadcrumb"><a onclick="switchView('home')" style="cursor:pointer;">Trang chủ</a> › <strong>Chuyên khoa</strong></div>
+          <h1 style="font-size:32px; font-weight:800; color:var(--primary-dark);">Chuyên khoa</h1>
+          <p style="color:var(--text-secondary);">Đa dạng chuyên khoa - Chăm sóc toàn diện</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-padding">
+      <div class="container">
+        <div class="specialty-grid" id="specialtyCardsGrid" style="text-align:center;" aria-live="polite"></div>
+
+        <div style="margin-top:32px; background:linear-gradient(90deg, var(--primary-dark), var(--primary)); border-radius:var(--radius-lg); padding:32px; color:#fff;">
+          <h2 style="font-size:24px; font-weight:800; margin-bottom:6px;">Sức khỏe hôm nay là hạnh phúc ngày mai</h2>
+          <p style="font-size:14px; opacity:0.9; margin-bottom:16px;">Đội ngũ bác sĩ tận tâm - Trang thiết bị hiện đại - Dịch vụ chuyên nghiệp</p>
+          <button class="btn" style="background:#fff; color:var(--primary-dark);" onclick="quickBookSpecialty(1)">Đặt lịch khám ngay →</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ==================== VIEW 3: TRANG ĐỘI NGŨ BÁC SĨ ==================== -->
+  <div id="view-doctors" class="page-view">
+    <section class="page-banner">
+      <div class="container">
+        <div class="breadcrumb"><a onclick="switchView('home')" style="cursor:pointer;">Trang chủ</a> › <strong>Đội ngũ bác sĩ</strong></div>
+        <h1 style="font-size:32px; font-weight:800; color:var(--primary-dark);">Đội ngũ bác sĩ</h1>
+        <p style="color:var(--text-secondary);">Đội ngũ bác sĩ giàu kinh nghiệm, tận tâm vì người bệnh</p>
+      </div>
+    </section>
+
+    <section class="section-padding" style="padding-top:24px;">
+      <div class="container">
+        <div class="doctor-page-filters">
+          <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="pageDoctorSearch" class="search-input" placeholder="Tìm kiếm theo tên bác sĩ, chuyên khoa...">
+          </div>
+          <select id="pageDoctorSelect" class="filter-select">
+            <option value="">Tất cả chuyên khoa</option>
+          </select>
+        </div>
+
+        <div class="doctors-page-layout">
+          <aside class="sidebar-card">
+            <h3 style="font-size:15px; font-weight:800; margin-bottom:10px;">Chuyên khoa</h3>
+            <ul class="sidebar-menu" id="specialtySidebarList">
+            </ul>
+          </aside>
+          <div>
+            <p class="doctor-results-summary" id="doctorResultsSummary" aria-live="polite"></p>
+            <div class="doctors-grid-page" id="pageDoctorsGrid"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ==================== VIEW 4: XÁC NHẬN ĐẶT LỊCH ==================== -->
+  <div id="view-confirm" class="page-view">
+    <section class="section-padding" style="padding-top:24px;">
+      <div class="container">
+        <div class="breadcrumb"><a onclick="switchView('home')" style="cursor:pointer;">Trang chủ</a> › <strong>Xác nhận đặt lịch</strong></div>
+        <h1 style="font-size:26px; font-weight:800; color:var(--primary-dark);">Xác nhận đặt lịch</h1>
+
+        <div class="confirm-box">
+          <div style="width:52px; height:52px; border-radius:50%; background:var(--primary); color:#fff; display:flex; align-items:center; justify-content:center; font-size:22px; margin:0 auto 12px;">
+            <i class="fa-solid fa-check"></i>
+          </div>
+          <h2 style="font-size:22px; font-weight:800; color:var(--primary-dark);">Đã gửi yêu cầu đặt lịch</h2>
+          <p style="font-size:13px; color:var(--text-secondary);">Lịch hẹn đang chờ phòng khám xác nhận. Thông tin bên dưới được trả về từ hệ thống.</p>
+
+          <div class="code-highlight-box">
+            <div style="font-size:12px; color:var(--text-secondary);">Mã lịch hẹn:</div>
+            <div id="confCode" style="font-size:19px; font-weight:800; color:var(--primary-dark);">—</div>
+          </div>
+
+          <div class="info-rows">
+            <div class="info-row"><span>Trạng thái:</span><strong id="confStatus">—</strong></div>
+            <div class="info-row"><span>Họ tên:</span><strong id="confName">—</strong></div>
+            <div class="info-row"><span>Chuyên khoa:</span><strong id="confSpec">—</strong></div>
+            <div class="info-row"><span>Bác sĩ:</span><strong id="confDoc">—</strong></div>
+            <div class="info-row"><span>Ngày khám:</span><strong id="confDate">—</strong></div>
+            <div class="info-row"><span>Giờ khám:</span><strong id="confTime">—</strong></div>
+            <div class="info-row"><span>Địa điểm:</span><strong id="confRoom">—</strong></div>
+          </div>
+          <p id="confEmailStatus" class="booking-inline-status" role="status" aria-live="polite"></p>
+
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <button class="btn btn-primary" onclick="scrollToHomeSection('tra-cuu-lich-hen', 'lookup')">Tra cứu lịch hẹn</button>
+            <button class="btn btn-light-outline" onclick="switchView('home')">Về trang chủ</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- KHU VỰC 7: FOOTER -->
+  <footer class="site-footer" id="lien-he">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="brand-logo" style="margin-bottom:12px;">
+            <div class="brand-icon-heart">
+              <svg width="36" height="36" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20 35.5C20 35.5 5 25.2 5 14.2C5 8.8 9.2 4.5 14.5 4.5C17.6 4.5 20 6.2 20 6.2C20 6.2 22.4 4.5 25.5 4.5C30.8 4.5 35 8.8 35 14.2C35 25.2 20 35.5 20 35.5Z" fill="#FFFFFF"/>
+                <circle cx="20" cy="13.5" r="2.1" fill="#148868"/>
+                <circle cx="20" cy="21.5" r="2.1" fill="#148868"/>
+                <circle cx="16" cy="17.5" r="2.1" fill="#148868"/>
+                <circle cx="24" cy="17.5" r="2.1" fill="#148868"/>
+              </svg>
+            </div>
+            <div class="brand-text">
+              <span class="brand-name" style="color:#fff;">Hiếu Tâm</span>
+              <span class="brand-sub" style="color:#8be3c9;">PHÒNG KHÁM ĐA KHOA</span>
+            </div>
+          </div>
+          <p style="font-size:13.5px; color:rgba(255,255,255,0.82);">Sức khỏe của bạn là sứ mệnh của chúng tôi.</p>
+        </div>
+
+        <div>
+          <h4 class="footer-heading">Liên hệ</h4>
+          <ul class="footer-list">
+            <li><i class="fa-solid fa-location-dot"></i> <span>Địa chỉ: Số 123 Nguyễn Thị Minh Khai, Phường 4, TP. Trà Vinh</span></li>
+            <li><i class="fa-solid fa-phone"></i> <span>Điện thoại: 0294 123 45 67</span></li>
+            <li><i class="fa-regular fa-envelope"></i> <span>Email: lienhe@hieutam.vn</span></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-heading">Giờ làm việc</h4>
+          <ul class="footer-list">
+            <li><i class="fa-regular fa-clock"></i> <span>Thứ 2 - Thứ 7: 07:00 - 17:00</span></li>
+            <li style="padding-left:22px;"><span>Chủ nhật: Nghỉ</span></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-heading">Kết nối với chúng tôi</h4>
+          <div class="social-links">
+            <a href="#" class="social-btn"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" class="social-btn"><i class="fa-brands fa-youtube"></i></a>
+            <a href="#" class="social-btn" style="font-size:11px;">Zalo</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>© 2026 Phòng khám Đa khoa Hiếu Tâm. All rights reserved.</div>
+        <div>Chính sách bảo mật &nbsp;|&nbsp; Điều khoản sử dụng</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- MODAL XEM CHI TIẾT BÁC SĨ -->
+  <div class="modal-backdrop" id="doctorDetailModal" aria-hidden="true">
+    <div class="modal-card doctor-detail-modal" role="dialog" aria-modal="true" aria-labelledby="doctorDetailName">
+      <div id="doctorModalBody"></div>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/patient.js"></script>
+  <script src="js/main.js"></script>
+
+  <!-- Script tự động cập nhật Lịch hôm nay theo ngày thực tế (hiển thị đầy đủ ngày tháng dưới từng thứ) -->
+  <script>
+    function updateClinicCalendar() {
+      const titleEl = document.getElementById('dynamicCurrentDateTitle');
+      const gridEl = document.getElementById('dynamicMiniWeekGrid');
+      if (!titleEl || !gridEl) return;
+
+      const now = new Date();
+      const currentDayOfWeek = now.getDay(); // 0: CN, 1: T2 ... 6: T7
+      const currentDateNum = now.getDate();
+      const currentMonth = now.getMonth() + 1;
+      const currentYear = now.getFullYear();
+
+      const dayNames = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
+      titleEl.textContent = `${dayNames[currentDayOfWeek]}, ${currentDateNum} tháng ${currentMonth}`;
+
+      // Tính toán ngày của các thứ trong tuần hiện tại (bắt đầu từ Thứ Hai)
+      const currentDayIndex = currentDayOfWeek === 0 ? 6 : currentDayOfWeek - 1; 
+      const currentMonday = new Date(now);
+      currentMonday.setDate(currentDateNum - currentDayIndex);
+
+      const weekCols = [
+        { label: 'T2', offset: 0 },
+        { label: 'T3', offset: 1 },
+        { label: 'T4', offset: 2 },
+        { label: 'T5', offset: 3 },
+        { label: 'T6', offset: 4 },
+        { label: 'T7', offset: 5 },
+        { label: 'CN', offset: 6 }
+      ];
+
+      gridEl.innerHTML = weekCols.map(col => {
+        const targetDate = new Date(currentMonday);
+        targetDate.setDate(currentMonday.getDate() + col.offset);
+        const targetDateNum = targetDate.getDate();
+
+        // Kiểm tra xem cột này có trùng với ngày hôm nay không
+        const isToday = (targetDate.toDateString() === now.toDateString());
+
+        const dayNumberHTML = isToday
+          ? `<div class="day-number-active">${targetDateNum}</div>`
+          : `<div class="day-number-text">${targetDateNum}</div>`;
+
+        return `
+          <div class="mini-day ${isToday ? 'active' : ''}">
+            <span class="mini-day-label">${col.label}</span>
+            ${dayNumberHTML}
+          </div>
+        `;
+      }).join('');
+    }
+
+    window.renderDynamicHeroCalendar = updateClinicCalendar;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      updateClinicCalendar();
+      setInterval(updateClinicCalendar, 60000);
+    });
+    updateClinicCalendar();
+  </script>
+</body>
+</html>
